@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -11,9 +12,23 @@ void print_shell(){
     printf("shell>");
 }
 
+char* tokenizer(char* buffer){
+    char* tokens = malloc(sizeof(BUFFER_LEN));
+    int i = 0;
+
+    tokens[0] = strtok(buffer, " \t\n");
+    while(tokens[i] != NULL){
+        i++;
+        tokens[i] = strtok(NULL, " \t\n");
+    }
+    tokens[i+1] = NULL;
+
+    return tokens;
+}
+
 char* parse(int argc){
     char* buffer[BUFFER_LEN];
-    char* tokens[BUFFER_LEN];
+    char* tokens = malloc(sizeof(BUFFER_LEN));
     int i = 0;
     
     if(argc == 1){
@@ -27,18 +42,6 @@ char* parse(int argc){
 
 }
 
-char* tokenizer(char* buffer){
-    char* tokens[BUFFER_LEN];
-    tokens[0] = strtok(buffer, " \t\n");
-    while(tokens[i] != NULL){
-        i++;
-        tokens[i] = strtok(NULL, " \t\n");
-    }
-    tokens[i+1] = NULL;
-
-    return tokens;
-}
-
 void printError(){
     write(STDERR_FILENO, ERROR_MESSAGE, strlen(ERROR_MESSAGE));
 }
@@ -50,7 +53,7 @@ int process(char* tokens){
 }
 
 int main(int argc, char **argv){
-    char* tokens[BUFFER_LEN];
+    char* tokens = malloc(sizeof(BUFFER_LEN));
 
     do{
         print_shell();
