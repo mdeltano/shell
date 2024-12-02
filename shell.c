@@ -36,6 +36,15 @@ void parse(int argc){
         fgets(buffer, BUFFER_LEN, stdin);
         tokens = tokenizer(buffer);
 
+        if(strcmp(tokens[0], "exit") == 0){
+            if(strcmp(tokens[1], NULL) == 0){
+                exit(0);
+            }
+            else{
+                printError();
+            }
+        }
+
         //TODO: LOGIC FOR BUILT IN COMMANDS GOES HERE USING tokens[0]
         //IF ALL BUILT IN COMMAND LOGIC DOES NOT HIT, USE process(tokens) TO EXECUTE AN EXTERNAL COMMAND FROM PATHS IN paths
 
