@@ -7,19 +7,6 @@
 char ERROR_MESSAGE[30] = "An error has occurred\n";
 int exit_switch = 0;
 
-
-
-int main(int argc, char **argv){
-    char* tokens[BUFFER_LEN];
-
-    do{
-        print_shell();
-        tokens = parse(argc);
-
-    } while(exit_switch == 0);
-}
-
-
 void print_shell(){
     printf("shell>");
 }
@@ -29,7 +16,7 @@ char* parse(int argc){
     char* tokens[BUFFER_LEN];
     int i = 0;
     
-    if(argc == 0){
+    if(argc == 1){
         fgets(buffer, BUFFER_LEN, stdin);
         tokens = tokenizer(buffer);
 
@@ -41,26 +28,37 @@ char* parse(int argc){
 }
 
 char* tokenizer(char* buffer){
+    char* tokens[BUFFER_LEN];
     tokens[0] = strtok(buffer, " \t\n");
     while(tokens[i] != NULL){
         i++;
         tokens[i] = strtok(NULL, " \t\n");
     }
     tokens[i+1] = NULL;
+
+    return tokens;
 }
-
-
 
 void printError(){
     write(STDERR_FILENO, ERROR_MESSAGE, strlen(ERROR_MESSAGE));
 }
 
-int process(char** tokens){
+int process(char* tokens){
     int rc = fork();
 
 
 }
 
+int main(int argc, char **argv){
+    char* tokens[BUFFER_LEN];
+
+    do{
+        print_shell();
+        tokens = parse(argc);
+        process(tokens);
+
+    } while(exit_switch == 0);
+}
 
 /*
     if(strcmp(tokens[0][BUFFER_LEN], "exit") == 0 && strlen(tokens[1][BUFFER_LEN] != 0)){
