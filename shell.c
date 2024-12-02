@@ -7,6 +7,7 @@
 
 char ERROR_MESSAGE[30] = "An error has occurred\n";
 int exit_switch = 0;
+char** paths;
 
 void print_shell(){
     printf("shell>");
@@ -26,7 +27,7 @@ char* tokenizer(char* buffer){
     return tokens;
 }
 
-char* parse(int argc){
+void parse(int argc){
     char* buffer[BUFFER_LEN];
     char* tokens = malloc(sizeof(BUFFER_LEN));
     int i = 0;
@@ -35,7 +36,9 @@ char* parse(int argc){
         fgets(buffer, BUFFER_LEN, stdin);
         tokens = tokenizer(buffer);
 
-        return tokens;
+        //TODO: LOGIC FOR BUILT IN COMMANDS GOES HERE USING tokens[0]
+        //IF ALL BUILT IN COMMAND LOGIC DOES NOT HIT, USE process(tokens) TO EXECUTE AN EXTERNAL COMMAND FROM PATHS IN paths
+
     }
 
 
@@ -49,7 +52,17 @@ void printError(){
 int process(char* tokens){
     int rc = fork();
 
+    if(rc < 0){
+        printError();
+        exit(0);
+    }
+    else if(rc == 0){ //child
 
+    }
+
+
+
+    return rc;
 }
 
 int main(int argc, char **argv){
@@ -57,8 +70,7 @@ int main(int argc, char **argv){
 
     do{
         print_shell();
-        tokens = parse(argc);
-        process(tokens);
+        parse(argc);
 
     } while(exit_switch == 0);
 }
