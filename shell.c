@@ -75,12 +75,3 @@ int main(int argc, char **argv){
     } while(exit_switch == 0);
 }
 
-/*
-    if(strcmp(tokens[0][BUFFER_LEN], "exit") == 0 && strlen(tokens[1][BUFFER_LEN] != 0)){
-        printError();
-        return 0;
-    }
-    if(strcmp(tokens[0][BUFFER_LEN], "exit") == 0){
-        return 1;
-    }
-    */
